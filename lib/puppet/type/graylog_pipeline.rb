@@ -5,7 +5,7 @@ Puppet::Type.newtype(:graylog_pipeline) do
   desc <<-END_OF_DOC
     @summary
       Creates a processing pipleine.
-    
+
     Creates a processing pipeline. This type takes the pipeline definition as
     source text; note that the pipeline name in the source text must match the
     resource title. Overall, you may find it more convenient to use the
@@ -49,6 +49,10 @@ Puppet::Type.newtype(:graylog_pipeline) do
     Also note that, if the Pipeline Processor is running before the Message \
     Filter Chain, then the only stream that will have messages at processing \
     time will be the 'All messages' stream."
+
+    def insync?(is)
+      is.sort.eql? should.sort
+    end
   end
 
   validate do
