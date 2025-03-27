@@ -15,7 +15,7 @@ Puppet::Type.newtype(:graylog_stream) do
             type  => 'equals',
             value => 'bar',
           },
-        ],    
+        ],
       }
   END_OF_DOC
 
@@ -58,6 +58,10 @@ Puppet::Type.newtype(:graylog_stream) do
     END_OF_DESC
     munge do |rule|
       { 'field' => :undef, 'description' => '', 'type' => :undef, 'inverted' => false, 'value' => '' }.merge(rule)
+    end
+
+    def insync?(is)
+      (should.sort_by{ |hsh| [hsh["field"], hsh["type"], hsh["value"]] }).eql?(is.sort_by { |hsh| [hsh["field"], hsh["type"], hsh["value"]] })
     end
   end
 
